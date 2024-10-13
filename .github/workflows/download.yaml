@@ -16,8 +16,12 @@ jobs:
       - name: Download
         run: .\Fido.ps1 -Win 11 -Lang Russian && .\Fido.ps1 -Win 10 -Lang Russian
 
-      - name: ls
-        run: ls
+      - name: upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows_iso
+          path: .\*.iso
+        
 
         
       
