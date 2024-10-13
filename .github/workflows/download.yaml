@@ -1,0 +1,22 @@
+name: download
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    name: download
+    runs-on: windows-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Download
+        run: .\Fido.ps1 -Win 11 -Lang Russian
+
+      - name: ls
+        run: ls
+
+        
+      
