@@ -15,9 +15,6 @@ jobs:
 
       - name: Download windows 10
         run: .\Fido.ps1 -Win 10 -Arch x64 -Lang Russian
-        
-      - name: Download windows 11
-        run: .\Fido.ps1 -Win 11 -Ed Pro -Arch x64 -Lang Russian
 
       - name: upload ISO
         uses: actions/upload-artifact@v4
