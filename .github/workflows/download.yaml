@@ -5,35 +5,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  strategy:
-    fail-fast: false
-    matrix:
-      runs: windows-latest
-      version:
-      - "10"
-      - "11"
-      lang:
-      - "Russian"
-      - "English"
-      
   download:
-    name: download
-    uses: ${{matrix.runs}}
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["10", "11"]
+        lang: ["Russian", "English"]
 
+    runs-on: windows-latest
     steps:
-      - name: checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download windows 11
-        run: .\Fido.ps1 -Win ${{matrix.version}} -Arch x64 -Lang ${{matrix.lang}} -Ed Pro && ls
-          
+      - name: Download Windows ISO
+        shell: pwsh
+        run: |
+          .\Fido.ps1 -Win "${{ matrix.version }}" -Arch x64 -Lang "${{ matrix.lang }}" -Ed Pro
+          Get-ChildItem -Path . -Filter *.iso
 
-      - name: upload ISO
+      - name: Upload ISO
         uses: actions/upload-artifact@v4
         with:
-          name: windows_iso
+          name: windows_iso_${{ matrix.version }}_${{ matrix.lang }}
           path: .\*.iso
-        
-
-        
-      
