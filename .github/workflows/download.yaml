@@ -5,6 +5,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  strategy:
+    fail-fast: false
+    matrix:
+      oversion: [11, 10]
+      lang:
+      - "Russian"
+      - "English"
+      
   download:
     name: download
     runs-on: windows-latest
@@ -14,7 +22,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download windows 11
-        run: .\Fido.ps1 -Win 11 -Arch x64 -Lang Russian -Ed Pro
+        run: .\Fido.ps1 -Win ${{matrix.version}} -Arch x64 -Lang ${{matrix.lang}} -Ed Pro && ls
+          
 
       - name: upload ISO
         uses: actions/upload-artifact@v4
