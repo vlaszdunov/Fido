@@ -8,14 +8,17 @@ jobs:
   strategy:
     fail-fast: false
     matrix:
-      oversion: [11, 10]
+      runs: windows-latest
+      version:
+      - "10"
+      - "11"
       lang:
       - "Russian"
       - "English"
       
   download:
     name: download
-    runs-on: windows-latest
+    uses: ${{matrix.runs}}
 
     steps:
       - name: checkout
